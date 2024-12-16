@@ -1,12 +1,18 @@
-const mysql = require("mysql");
+const mysql = require("mysql2");
 
-// Configure the database connection
-const db = mysql.createConnection({
-  host: "localhost", // Typically localhost for phpMyAdmin
-  user: "root", // Default MySQL user
-  password: "", // Leave blank if no password is set
-  database: "Yellow_Page", // Replace with your database name
+const connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "", // your MySQL password
+  database: "yellow_page", // your database name
 });
 
-// Export the connection
-module.exports = db;
+connection.connect((err) => {
+  if (err) {
+    console.error("Error connecting to the database:", err.stack);
+  } else {
+    console.log("Connected to the MySQL database.");
+  }
+});
+
+module.exports = connection;

@@ -22,7 +22,12 @@ exports.register = (req, res) => {
       // Create the user
       User.create(username, email, hashedPassword, (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
-        res.status(201).json({ message: "User registered successfully" });
+        res.status(201).json({
+          message: "User registered successfully",
+          email,
+          username,
+          password,
+        });
       });
     });
   });
