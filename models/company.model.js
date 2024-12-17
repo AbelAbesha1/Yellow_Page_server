@@ -9,14 +9,16 @@ exports.createCompany = (companyData, callback) => {
     phone,
     address,
     description,
+    category,
     website,
     locationLink,
     socialMediaLinks,
   } = companyData;
 
   // SQL query to insert company data
-  const query = `INSERT INTO companies (username, email, name, phone, address, description, website, locationLink, socialMediaLinks, tag) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')`;
+  const query = `INSERT INTO companies (username, email, name, phone, address, description, category, website, locationLink, socialMediaLinks, tag) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')`;
+  
   db.query(
     query,
     [
@@ -26,6 +28,7 @@ exports.createCompany = (companyData, callback) => {
       phone,
       address,
       description,
+      category,  // category without `=`
       website,
       locationLink,
       JSON.stringify(socialMediaLinks),
@@ -34,7 +37,7 @@ exports.createCompany = (companyData, callback) => {
       if (err) {
         return callback(err, null);
       }
-      callback(null, result.insertId);
+      callback(null, result.insertId); // Return the inserted company ID
     }
   );
 };
@@ -57,7 +60,7 @@ exports.getCompanyById = (id, callback) => {
     if (err) {
       return callback(err, null);
     }
-    callback(null, result[0]); // return the first result
+    callback(null, result[0]); // Return the first result
   });
 };
 
@@ -70,13 +73,25 @@ exports.updateCompany = (id, companyData, callback) => {
     phone,
     address,
     description,
+    category,
     website,
     locationLink,
     socialMediaLinks,
   } = companyData;
 
-  const query = `UPDATE companies SET username = ?, email = ?, name = ?, phone = ?, address = ?, description = ?, website = ?, locationLink = ?, socialMediaLinks = ?
+  const query = `UPDATE companies SET 
+                 username = ?, 
+                 email = ?, 
+                 name = ?, 
+                 phone = ?, 
+                 address = ?, 
+                 description = ?, 
+                 category = ?, 
+                 website = ?, 
+                 locationLink = ?, 
+                 socialMediaLinks = ?
                  WHERE id = ?`;
+
   db.query(
     query,
     [
@@ -86,6 +101,7 @@ exports.updateCompany = (id, companyData, callback) => {
       phone,
       address,
       description,
+      category,
       website,
       locationLink,
       JSON.stringify(socialMediaLinks),

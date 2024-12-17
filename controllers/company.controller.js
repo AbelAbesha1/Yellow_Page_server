@@ -9,13 +9,14 @@ exports.createCompany = (req, res) => {
     phone,
     address,
     description,
+    category,
     website,
     locationLink,
     socialMediaLinks,
   } = req.body;
 
   // Validate required fields
-  if (!username || !email || !name || !phone || !address || !description) {
+  if (!username || !email || !name || !phone || !address || !description || !category) {
     return res.status(400).json({ error: "Required fields are missing" });
   }
 
@@ -26,10 +27,12 @@ exports.createCompany = (req, res) => {
     phone,
     address,
     description,
+    category,
     website,
     locationLink,
-    socialMediaLinks,
+    socialMediaLinks: JSON.stringify(socialMediaLinks),
   };
+  console.log(companyData)
 
   companyModel.createCompany(companyData, (err, companyId) => {
     if (err) {
@@ -73,6 +76,7 @@ exports.updateCompany = (req, res) => {
     phone,
     address,
     description,
+    category,
     website,
     locationLink,
     socialMediaLinks,
@@ -85,9 +89,10 @@ exports.updateCompany = (req, res) => {
     phone,
     address,
     description,
+    category,
     website,
     locationLink,
-    socialMediaLinks,
+    socialMediaLinks: JSON.stringify(socialMediaLinks),
   };
 
   companyModel.updateCompany(id, companyData, (err, result) => {
